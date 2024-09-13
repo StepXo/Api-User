@@ -5,6 +5,8 @@ import com.BootcampPragma.Api_User.domain.model.User;
 import java.util.List;
 
 public interface UserRepositoryPort {
+    User getUserById(Long id);
+
     User register(User user);
 
     void updateUser(User user);

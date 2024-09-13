@@ -1,6 +1,8 @@
 package com.BootcampPragma.Api_User.application.handler;
 
 import com.BootcampPragma.Api_User.application.dto.UserRequestDto;
+import com.BootcampPragma.Api_User.application.dto.UserResponseDto;
+import com.BootcampPragma.Api_User.application.mapper.UserResponseMapper;
 import com.BootcampPragma.Api_User.domain.api.UserServicePort;
 import com.BootcampPragma.Api_User.domain.model.RoleEnum;
 import com.BootcampPragma.Api_User.domain.model.User;
@@ -10,21 +12,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class UserHandler {
     private  final UserServicePort userServicePort;
     private final PasswordEncoder passwordEncoder;
+    private final UserResponseMapper userResponseMapper;
 
 
 
     public UserRequestDto register(UserRequestDto userDto) {
         User user = User.builder().name(userDto.getName())
                 .lastName(userDto.getLastName())
-                .id(userDto.getId())
                 .email(userDto.getEmail())
                 .idDocument(userDto.getIdDocument())
                 .phoneNumber(userDto.getPhoneNumber())
@@ -36,4 +36,9 @@ public class UserHandler {
         return userDto;
     }
 
+    public UserResponseDto getUserById(Long id) {
+        User user = userServicePort.getUserById(id);
+
+        return userResponseMapper.toUserResponseDto(user);
+    }
 }

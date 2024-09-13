@@ -25,6 +25,11 @@ public class UserUseCase implements UserServicePort {
     }
 
     @Override
+    public User getUserById(Long id) {
+        return userRepositoryPort.getUserById(id);
+    }
+
+    @Override
     public void updateUser(User user) {
 
     }
