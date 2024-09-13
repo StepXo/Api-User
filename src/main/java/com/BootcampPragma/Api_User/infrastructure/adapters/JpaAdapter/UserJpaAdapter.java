@@ -18,6 +18,12 @@ public class UserJpaAdapter implements UserRepositoryPort {
         UserEntity userEntity = this.userRepository.save(userMapper.toUserEntity(user));
         return userMapper.toUser(userEntity);
     }
+    @Override
+    public User getUserById(Long id) {
+        UserEntity userEntity = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+        return userMapper.toUser(userEntity);
+    }
 
     @Override
     public void updateUser(User user) {

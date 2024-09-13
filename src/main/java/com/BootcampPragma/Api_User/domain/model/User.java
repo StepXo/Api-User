@@ -20,7 +20,7 @@ public class User {
         this.lastName = builder.lastName;
         this.email = builder.email;
         this.password = builder.password;
-        this.role = builder.roleEnum;
+        this.role = builder.role;
         this.birthDate = builder.birthDate;
         this.idDocument = builder.idDocument;
         this.phoneNumber = builder.phoneNumber;

@@ -9,7 +9,7 @@ public class UserBuilder {
     public String lastName;
     public String email;
     public String password;
-    public RoleEnum roleEnum;
+    public RoleEnum role;
     public String idDocument;
     public String phoneNumber;
     public String birthDate;
@@ -48,8 +48,8 @@ public class UserBuilder {
         return this;
     }
 
-    public UserBuilder roleEnum(RoleEnum roleEnum) {
-        this.roleEnum = roleEnum;
+    public UserBuilder roleEnum(RoleEnum role) {
+        this.role = role;
         return this;
     }
 
