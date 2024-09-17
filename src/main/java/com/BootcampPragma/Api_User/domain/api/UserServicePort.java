@@ -4,7 +4,7 @@ import com.BootcampPragma.Api_User.domain.model.User;
 
 
 public interface UserServicePort {
-    User getUserById(Long id);
+    User getUserByIdDocument(String id);
 
     User register(User user);
 

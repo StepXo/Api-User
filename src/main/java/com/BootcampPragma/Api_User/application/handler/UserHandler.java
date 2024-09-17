@@ -36,8 +36,8 @@ public class UserHandler {
         return userDto;
     }
 
-    public UserResponseDto getUserById(Long id) {
-        User user = userServicePort.getUserById(id);
+    public UserResponseDto getUserByIdDocument(String id) {
+        User user = userServicePort.getUserByIdDocument(id);
 
         return userResponseMapper.toUserResponseDto(user);
     }

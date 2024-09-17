@@ -5,7 +5,10 @@ import com.BootcampPragma.Api_User.domain.model.User;
 import java.util.List;
 
 public interface UserRepositoryPort {
-    User getUserById(Long id);
+
+    User getUserByIdDocument(String id);
+
+    User getUserByEmail(String email);
 
     User register(User user);
 

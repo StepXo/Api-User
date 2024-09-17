@@ -28,8 +28,8 @@ public class UserController {
         return ResponseEntity.ok(service.register(request));
     }
     @GetMapping("/{id}")
-    public ResponseEntity<UserResponseDto> getUserById(@PathVariable Long id) {
-        UserResponseDto userResponseDto = service.getUserById(id);
+    public ResponseEntity<UserResponseDto> getUserByIdDocument(@PathVariable String id) {
+        UserResponseDto userResponseDto = service.getUserByIdDocument(id);
         return ResponseEntity.ok(userResponseDto);
     }
 

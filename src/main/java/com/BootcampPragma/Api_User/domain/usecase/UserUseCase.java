@@ -1,6 +1,8 @@
 package com.BootcampPragma.Api_User.domain.usecase;
 
 import com.BootcampPragma.Api_User.domain.api.UserServicePort;
+import com.BootcampPragma.Api_User.domain.exeption.UserEmailAlreadyExistsException;
+import com.BootcampPragma.Api_User.domain.exeption.UserIdAlreadyExistsException;
 import com.BootcampPragma.Api_User.domain.model.User;
 import com.BootcampPragma.Api_User.domain.spi.UserRepositoryPort;
 import com.BootcampPragma.Api_User.domain.utils.Validation;
@@ -17,16 +19,22 @@ public class UserUseCase implements UserServicePort {
 
     @Override
     public User register(User user) {
-        Validation.validateEmail(user.getEmail());
-        Validation.validatePhoneNumber(user.getPhoneNumber());
-        Validation.validateIdDocument(user.getIdDocument());
-        Validation.validateAge(user.getBirthDate());
+
+        Validation.validate(user);
+        if (userRepositoryPort.getUserByEmail(user.getEmail()) != null) {
+            throw new UserEmailAlreadyExistsException();
+        }
+
+        if (userRepositoryPort.getUserByIdDocument(user.getIdDocument()) != null) {
+            throw new UserIdAlreadyExistsException();
+        }
+
         return userRepositoryPort.register(user);
     }
 
     @Override
-    public User getUserById(Long id) {
-        return userRepositoryPort.getUserById(id);
+    public User getUserByIdDocument(String id) {
+        return userRepositoryPort.getUserByIdDocument(id);
     }
 
     @Override

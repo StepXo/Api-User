@@ -12,17 +12,24 @@ public class UserJpaAdapter implements UserRepositoryPort {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-
     @Override
     public User register(User user) {
         UserEntity userEntity = this.userRepository.save(userMapper.toUserEntity(user));
         return userMapper.toUser(userEntity);
     }
+
     @Override
-    public User getUserById(Long id) {
-        UserEntity userEntity = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
-        return userMapper.toUser(userEntity);
+    public User getUserByIdDocument(String id) {
+        return userRepository.findByIdDocument(id)
+                .map(userMapper::toUser)
+                .orElse(null);
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .map(userMapper::toUser)
+                .orElse(null);
     }
 
     @Override
