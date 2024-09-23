@@ -1,8 +1,6 @@
 package com.BootcampPragma.Api_User.domain.utils;
 
 import com.BootcampPragma.Api_User.domain.model.Authentication;
-import com.BootcampPragma.Api_User.domain.model.RoleEnum;
-import com.BootcampPragma.Api_User.domain.model.User;
 
 public class AuthenticationBuilder {
 

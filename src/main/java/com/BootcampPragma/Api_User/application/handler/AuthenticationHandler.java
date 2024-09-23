@@ -15,16 +15,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class AuthenticationHandler {
     private  final AuthenticationServicePort authenticationServicePort;
-    private final PasswordEncoder passwordEncoder;
     private final AuthenticationMapper authenticationMapper;
 
 
 
     public AuthenticationResponse login(AuthenticationRequest authenticationDto) {
+
         Authentication authentication = Authentication.builder()
                 .email(authenticationDto.getEmail())
-                .password(passwordEncoder.encode(authenticationDto.getPassword())).build();
-
+                .password(authenticationDto.getPassword()).build();
         Authentication response = authenticationServicePort.login(authentication);
         return authenticationMapper.toAuthenticationResponse(response);
     }

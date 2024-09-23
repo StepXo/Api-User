@@ -44,7 +44,6 @@ public class UserHandler {
                 .password(passwordEncoder.encode(userDto.getPassword()))
                 .roleEnum(userDto.getRole()).build();
 
-
         return mapper.toAuthenticationResponse(userServicePort.register(user));
     }
 

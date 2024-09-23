@@ -3,8 +3,6 @@ package com.BootcampPragma.Api_User.domain.utils;
 import com.BootcampPragma.Api_User.domain.model.RoleEnum;
 import com.BootcampPragma.Api_User.domain.model.User;
 
-import java.util.List;
-import java.util.Set;
 
 public class UserBuilder {
 

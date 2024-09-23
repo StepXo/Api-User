@@ -30,7 +30,6 @@ public class UserUseCase implements UserServicePort {
             throw new UserIdAlreadyExistsException();
         }
         String token = userRepositoryPort.register(user);
-
         return Authentication.builder()
                 .email(user.getEmail())
                 .password(user.getPassword())

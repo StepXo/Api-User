@@ -30,12 +30,12 @@ public class ControllerAdvisor {
 
 
     //NotFound
-    /*@ExceptionHandler(ItemNotFoundException.class)
-    public ResponseEntity<Map<String, String>> handleItemNotFoundException(
-            ItemNotFoundException itemNotFoundException) {
+    @ExceptionHandler(UserNotFound.class)
+    public ResponseEntity<Map<String, String>> userNotFound(
+            UserNotFound userNotFound) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.ITEM_NOT_FOUND.getMessage()));
-    }*/
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.USER_NOT_FOUND.getMessage()));
+    }
 
     //BadRequest
     @ExceptionHandler(EmailFormatException.class)
@@ -62,5 +62,13 @@ public class ControllerAdvisor {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Collections.singletonMap(MESSAGE, ExceptionResponse.PHONE_NUMBER_FORMAT.getMessage()));
     }
+
+    @ExceptionHandler(PasswordFormatException.class)
+    public ResponseEntity<Map<String, String>> passwordFormatException(
+            PasswordFormatException passwordFormatException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.PASSWORD_FORMAT.getMessage()));
+    }
+
 
 }

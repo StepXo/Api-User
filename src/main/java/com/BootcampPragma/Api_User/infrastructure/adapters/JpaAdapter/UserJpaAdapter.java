@@ -7,10 +7,7 @@ import com.BootcampPragma.Api_User.infrastructure.adapters.persistance.mapper.Us
 import com.BootcampPragma.Api_User.infrastructure.adapters.persistance.repository.UserRepository;
 import com.BootcampPragma.Api_User.infrastructure.adapters.securityconfig.jwtconfiguration.JwtService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.stereotype.Component;
 
-import java.util.Collection;
 
 @RequiredArgsConstructor
 public class UserJpaAdapter implements UserRepositoryPort {
@@ -22,8 +19,8 @@ public class UserJpaAdapter implements UserRepositoryPort {
     @Override
     public String register(User user) {
         UserEntity userEntity = userMapper.toUserEntity(user);
-         userRepository.save(userEntity);
 
+         userRepository.save(userEntity);
 
         return jwtService.generate(userMapper.toUserEntity(user));
     }
