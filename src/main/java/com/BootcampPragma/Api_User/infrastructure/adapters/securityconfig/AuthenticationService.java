@@ -23,7 +23,6 @@ public class AuthenticationService implements AuthenticationRepositoryPort {
 
     @Override
     public String authenticate(Authentication request) {
-        System.out.println("Authentication");
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -31,9 +30,7 @@ public class AuthenticationService implements AuthenticationRepositoryPort {
                         request.getPassword()
                 )
         );
-
-        System.out.println("Llego");
-
+        
         var user = repository.findByEmail(request.getEmail()).orElseThrow();
 
 

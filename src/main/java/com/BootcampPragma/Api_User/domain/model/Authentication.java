@@ -13,6 +13,7 @@ public class Authentication {
 
         this.email = builder.email;
         this.password = builder.password;
+        this.token = builder.token;
 
     }
 

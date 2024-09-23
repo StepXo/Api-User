@@ -22,8 +22,8 @@ public class UserJpaAdapter implements UserRepositoryPort {
     @Override
     public String register(User user) {
         UserEntity userEntity = userMapper.toUserEntity(user);
-         userRepository.save(userEntity);
 
+         userRepository.save(userEntity);
 
         return jwtService.generate(userMapper.toUserEntity(user));
     }
