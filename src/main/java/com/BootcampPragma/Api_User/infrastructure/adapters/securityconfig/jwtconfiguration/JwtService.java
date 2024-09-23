@@ -8,10 +8,12 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +21,7 @@ import java.util.function.Function;
 
 @Service
 public class JwtService {
-    private static final String SECRET_KEY = "mi_mama-Me_mima-_miMama_meAma";
+    private static final String SECRET_KEY = "mi2345mama5rhnse567Me3yagzrt5ygmimafyghseyae5yrthmiMamasatresysthmeAma";
 
     public String getToken(UserEntity user){
         return generateToken(new HashMap<>(),user);
@@ -27,13 +29,13 @@ public class JwtService {
 
     public String generateToken(
             Map<String, Object> extraClaims,
-            @NotNull UserDetails userDetails
+            UserEntity user
 
     ) {
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
-                .setSubject(userDetails.getUsername())
+                .setSubject(user.getId().toString())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
@@ -54,10 +56,11 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    public String generate(UserDetails userDetails) {
+    public String generate(UserEntity user) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("role", "USER");
-        return generateToken(claims, userDetails);
+        String firstRole = user.getRole().toString();
+        claims.put("role", firstRole);
+        return generateToken(claims, user);
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {

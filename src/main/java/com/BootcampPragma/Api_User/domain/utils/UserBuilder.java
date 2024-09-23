@@ -3,6 +3,9 @@ package com.BootcampPragma.Api_User.domain.utils;
 import com.BootcampPragma.Api_User.domain.model.RoleEnum;
 import com.BootcampPragma.Api_User.domain.model.User;
 
+import java.util.List;
+import java.util.Set;
+
 public class UserBuilder {
 
     public String name;
@@ -15,7 +18,6 @@ public class UserBuilder {
     public String birthDate;
     public long id;
 
-    // Métodos de configuración
     public UserBuilder name(String name) {
         this.name = name;
         return this;
@@ -53,7 +55,6 @@ public class UserBuilder {
         return this;
     }
 
-    // Método para construir el objeto User
     public User build() {
         return new User(this);
     }
