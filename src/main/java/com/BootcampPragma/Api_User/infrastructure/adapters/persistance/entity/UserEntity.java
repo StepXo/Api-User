@@ -8,7 +8,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "Users")
@@ -23,21 +26,28 @@ public class UserEntity implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+
     @Column(name = "name", nullable = false)
     private String name;
+
     @Column(name = "last_name", nullable = false)
     private String lastName;
+
     @Column(name = "password", nullable = false)
     private String password;
-    @Column(name = "email", nullable = false)
+
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
+
     @Enumerated(EnumType.STRING)
-    @Column(name = "role", nullable = false)
     private RoleEnum role;
+
     @Column(name = "id_document", nullable = false, unique = true)
     private String idDocument;
+
     @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
+
     @Column(name = "birth_date", nullable = false)
     private String birthDate;
 
@@ -48,7 +58,7 @@ public class UserEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return getName();
+        return email;
     }
 
     @Override

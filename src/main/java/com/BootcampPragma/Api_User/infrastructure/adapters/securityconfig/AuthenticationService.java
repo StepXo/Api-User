@@ -1,48 +1,44 @@
 package com.BootcampPragma.Api_User.infrastructure.adapters.securityconfig;
 
-import com.BootcampPragma.Api_User.application.dto.UserRequestDto;
-import com.BootcampPragma.Api_User.domain.model.RoleEnum;
-import com.BootcampPragma.Api_User.infrastructure.adapters.persistance.entity.UserEntity;
+import com.BootcampPragma.Api_User.domain.model.Authentication;
+import com.BootcampPragma.Api_User.domain.spi.AuthenticationRepositoryPort;
 import com.BootcampPragma.Api_User.infrastructure.adapters.persistance.repository.UserRepository;
 import com.BootcampPragma.Api_User.infrastructure.adapters.securityconfig.jwtconfiguration.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-@Service
+import java.util.Collection;
+
 @RequiredArgsConstructor
-public class AuthenticationService {
+@Service
+public class AuthenticationService implements AuthenticationRepositoryPort {
     private final UserRepository repository;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
-    private final PasswordEncoder passwordEncoder;
 
-    /*public UserResponseDto authenticate(UserRequestDto request) {
+    @Override
+    public String authenticate(Authentication request) {
+        System.out.println("Authentication");
+
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getName(),
+                        request.getEmail(),
                         request.getPassword()
                 )
         );
-        var user = repository.findByName(request.getName()).orElseThrow();
 
-        var jwtToken = jwtService.generate(user);
-        return UserResponseDto.builder()
-                .token(jwtToken)
-                .build();
-    }*/
+        System.out.println("Llego");
 
-    /*public UserResponseDto register(RegisterRequest registerRequest) {
-        UserEntity user = UserEntity.builder().name(registerRequest.getName())
-                .lastName(registerRequest.getLastName())
-                .email(registerRequest.getEmail())
-                .password(passwordEncoder.encode(registerRequest.getPassword()))
-                .roleEnum(RoleEnum.USER).build();
+        var user = repository.findByEmail(request.getEmail()).orElseThrow();
 
-        repository.save(user);
 
-        return UserResponseDto.builder().token(jwtService.getToken(user)).build();
-    }*/
+        return jwtService.generate(user);
+
+    }
+
 }

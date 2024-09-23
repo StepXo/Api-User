@@ -1,4 +1,4 @@
-package com.BootcampPragma.Api_User.domain.Exeptions;
+package com.BootcampPragma.Api_User.domain.exeption;
 
 public class InvalidAgeException extends RuntimeException{
     public InvalidAgeException() {

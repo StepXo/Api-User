@@ -5,24 +5,41 @@ import com.BootcampPragma.Api_User.domain.spi.UserRepositoryPort;
 import com.BootcampPragma.Api_User.infrastructure.adapters.persistance.entity.UserEntity;
 import com.BootcampPragma.Api_User.infrastructure.adapters.persistance.mapper.UserMapper;
 import com.BootcampPragma.Api_User.infrastructure.adapters.persistance.repository.UserRepository;
+import com.BootcampPragma.Api_User.infrastructure.adapters.securityconfig.jwtconfiguration.JwtService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.stereotype.Component;
+
+import java.util.Collection;
 
 @RequiredArgsConstructor
 public class UserJpaAdapter implements UserRepositoryPort {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final JwtService jwtService;
 
 
     @Override
-    public User register(User user) {
-        UserEntity userEntity = this.userRepository.save(userMapper.toUserEntity(user));
-        return userMapper.toUser(userEntity);
+    public String register(User user) {
+        UserEntity userEntity = userMapper.toUserEntity(user);
+         userRepository.save(userEntity);
+
+
+        return jwtService.generate(userMapper.toUserEntity(user));
     }
+
     @Override
-    public User getUserById(Long id) {
-        UserEntity userEntity = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
-        return userMapper.toUser(userEntity);
+    public User getUserByIdDocument(String id) {
+        return userRepository.findByIdDocument(id)
+                .map(userMapper::toUser)
+                .orElse(null);
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .map(userMapper::toUser)
+                .orElse(null);
     }
 
     @Override
