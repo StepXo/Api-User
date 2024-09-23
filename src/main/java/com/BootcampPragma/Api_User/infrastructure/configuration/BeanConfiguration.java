@@ -53,8 +53,6 @@ public class BeanConfiguration {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
-
-
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();

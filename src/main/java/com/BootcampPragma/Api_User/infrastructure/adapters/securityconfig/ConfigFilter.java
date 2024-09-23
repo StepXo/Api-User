@@ -28,6 +28,9 @@ public class ConfigFilter {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/category/**").hasRole("ADMIN")
+                        .requestMatchers("/item/**").hasRole("ADMIN")
+                        .requestMatchers("/brand/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
