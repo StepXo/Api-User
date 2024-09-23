@@ -25,27 +25,9 @@ import java.util.stream.Stream;
 @Transactional
 public class UserHandler {
     private  final UserServicePort userServicePort;
-    private final PasswordEncoder passwordEncoder;
     private final UserHandlerMapper userHandlerMapper;
-    private final AuthenticationMapper mapper;
 
 
-
-
-    public AuthenticationResponse register(UserRequest userDto) {
-
-
-        User user = User.builder().name(userDto.getName())
-                .lastName(userDto.getLastName())
-                .email(userDto.getEmail())
-                .idDocument(userDto.getIdDocument())
-                .phoneNumber(userDto.getPhoneNumber())
-                .birthDate(userDto.getBirthDate())
-                .password(passwordEncoder.encode(userDto.getPassword()))
-                .roleEnum(userDto.getRole()).build();
-
-        return mapper.toAuthenticationResponse(userServicePort.register(user));
-    }
 
     public UserResponse getUserByIdDocument(String id) {
         User user = userServicePort.getUserByIdDocument(id);

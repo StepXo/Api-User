@@ -30,7 +30,7 @@ public class AuthenticationService implements AuthenticationRepositoryPort {
         var user = repository.findByEmail(request.getEmail()).orElseThrow();
 
 
-        return jwtService.generate(user);
+        return jwtService.getToken(user);
 
     }
 

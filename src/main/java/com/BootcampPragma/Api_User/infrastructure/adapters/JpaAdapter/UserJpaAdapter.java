@@ -22,7 +22,7 @@ public class UserJpaAdapter implements UserRepositoryPort {
 
          userRepository.save(userEntity);
 
-        return jwtService.generate(userMapper.toUserEntity(user));
+        return jwtService.getToken(userMapper.toUserEntity(user));
     }
 
     @Override
