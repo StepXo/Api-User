@@ -61,7 +61,7 @@ class UserJpaAdapterTest {
         when(userMapper.toUser(userEntity)).thenReturn(user);
 
         // Act
-        User result = userJpaAdapter.register(user);
+        String result = userJpaAdapter.register(user);
 
         // Assert
         assertNotNull(result, "The result should not be null");

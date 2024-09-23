@@ -1,9 +1,12 @@
 package com.BootcampPragma.Api_User.application.handler;
 
-import com.BootcampPragma.Api_User.application.dto.UserRequestDto;
-import com.BootcampPragma.Api_User.application.dto.UserResponseDto;
-import com.BootcampPragma.Api_User.application.mapper.UserResponseMapper;
+import com.BootcampPragma.Api_User.application.dto.AuthenticationResponse;
+import com.BootcampPragma.Api_User.application.dto.UserRequest;
+import com.BootcampPragma.Api_User.application.dto.UserResponse;
+import com.BootcampPragma.Api_User.application.mapper.AuthenticationMapper;
+import com.BootcampPragma.Api_User.application.mapper.UserHandlerMapper;
 import com.BootcampPragma.Api_User.domain.api.UserServicePort;
+import com.BootcampPragma.Api_User.domain.model.Authentication;
 import com.BootcampPragma.Api_User.domain.model.RoleEnum;
 import com.BootcampPragma.Api_User.domain.model.User;
 
@@ -12,17 +15,26 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Stream;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class UserHandler {
     private  final UserServicePort userServicePort;
     private final PasswordEncoder passwordEncoder;
-    private final UserResponseMapper userResponseMapper;
+    private final UserHandlerMapper userHandlerMapper;
+    private final AuthenticationMapper mapper;
 
 
 
-    public UserRequestDto register(UserRequestDto userDto) {
+
+    public AuthenticationResponse register(UserRequest userDto) {
+
+
         User user = User.builder().name(userDto.getName())
                 .lastName(userDto.getLastName())
                 .email(userDto.getEmail())
@@ -30,15 +42,15 @@ public class UserHandler {
                 .phoneNumber(userDto.getPhoneNumber())
                 .birthDate(userDto.getBirthDate())
                 .password(passwordEncoder.encode(userDto.getPassword()))
-                .roleEnum(RoleEnum.USER).build();
+                .roleEnum(userDto.getRole()).build();
 
-        userServicePort.register(user);
-        return userDto;
+
+        return mapper.toAuthenticationResponse(userServicePort.register(user));
     }
 
-    public UserResponseDto getUserByIdDocument(String id) {
+    public UserResponse getUserByIdDocument(String id) {
         User user = userServicePort.getUserByIdDocument(id);
 
-        return userResponseMapper.toUserResponseDto(user);
+        return userHandlerMapper.toUserResponseDto(user);
     }
 }
