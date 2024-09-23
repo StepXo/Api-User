@@ -2,6 +2,7 @@ package com.BootcampPragma.Api_User.infrastructure.input;
 
 import com.BootcampPragma.Api_User.application.dto.AuthenticationRequest;
 import com.BootcampPragma.Api_User.application.dto.AuthenticationResponse;
+import com.BootcampPragma.Api_User.application.dto.UserRequest;
 import com.BootcampPragma.Api_User.application.handler.AuthenticationHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,13 @@ public class AuthenticationController {
     ) {
         AuthenticationResponse token = service.login(request);
         return  ResponseEntity.ok(token);
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<AuthenticationResponse> register(
+            @RequestBody UserRequest request
+    ) {
+        return ResponseEntity.ok(service.register(request,"USER"));
     }
 
 }

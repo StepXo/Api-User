@@ -21,7 +21,7 @@ public class JwtService {
     private static final String SECRET_KEY = "mi2345mama5rhnse567Me3yagzrt5ygmimafyghseyae5yrthmiMamasatresysthmeAma";
 
     public String getToken(UserEntity user){
-        return generateToken(new HashMap<>(),user);
+        return generate(user);
     }
 
     public String generateToken(
@@ -32,7 +32,7 @@ public class JwtService {
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
-                .setSubject(user.getId().toString())
+                .setSubject(user.getEmail())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
@@ -56,7 +56,7 @@ public class JwtService {
     public String generate(UserEntity user) {
         Map<String, Object> claims = new HashMap<>();
         String firstRole = user.getRole().toString();
-        claims.put("role", firstRole);
+        claims.put("role","ROLE_" + firstRole);
         return generateToken(claims, user);
     }
 

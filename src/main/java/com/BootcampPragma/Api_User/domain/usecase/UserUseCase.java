@@ -18,24 +18,7 @@ public class UserUseCase implements UserServicePort {
         this.userRepositoryPort = userRepositoryPort;
     }
 
-    @Override
-    public Authentication register(User user) {
 
-        Validation.validate(user);
-        if (userRepositoryPort.getUserByEmail(user.getEmail()) != null) {
-            throw new UserEmailAlreadyExistsException();
-        }
-
-        if (userRepositoryPort.getUserByIdDocument(user.getIdDocument()) != null) {
-            throw new UserIdAlreadyExistsException();
-        }
-        String token = userRepositoryPort.register(user);
-        return Authentication.builder()
-                .email(user.getEmail())
-                .password(user.getPassword())
-                .token(token)
-                .build();
-    }
 
     @Override
     public User getUserByIdDocument(String id) {
