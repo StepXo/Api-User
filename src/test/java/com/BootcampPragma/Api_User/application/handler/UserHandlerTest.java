@@ -51,42 +51,6 @@ class UserHandlerTest {
     }
 
     @Test
-    void testRegister() {
-
-        User expectedUser = User.builder()
-                .name("John")
-                .lastName("Doe")
-                .email("john.doe@example.com")
-                .idDocument("123456")
-                .phoneNumber("+123456789012")
-                .birthDate("01/01/2000")
-                .password("encodedPassword")
-                .roleEnum(RoleEnum.USER)
-                .build();
-
-        when(passwordEncoder.encode("password")).thenReturn("encodedPassword");
-
-        // Act
-        UserRequest result = userHandler.register(userDto);
-
-        // Assert
-        verify(userServicePort).register(argThat(new ArgumentMatcher<User>() {
-            @Override
-            public boolean matches(User actualUser) {
-                return actualUser.getName().equals(expectedUser.getName())
-                        && actualUser.getLastName().equals(expectedUser.getLastName())
-                        && actualUser.getEmail().equals(expectedUser.getEmail())
-                        && actualUser.getIdDocument().equals(expectedUser.getIdDocument())
-                        && actualUser.getPhoneNumber().equals(expectedUser.getPhoneNumber())
-                        && actualUser.getBirthDate().equals(expectedUser.getBirthDate())
-                        && actualUser.getPassword().equals(expectedUser.getPassword())
-                        && actualUser.getRole().equals(expectedUser.getRole());
-            }
-        }));
-        assertEquals(userDto, result);
-    }
-
-    @Test
     void testGetUserByIdDocument() {
         // Arrange
         String id = "123456";

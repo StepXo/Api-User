@@ -38,39 +38,6 @@ public class BeanConfiguration {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public UserServicePort userServicePort() {
-        return new UserUseCase(userRepositoryPort());
-    }
-
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return username -> userRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-    }
-
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
-    }
-
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService());
-        authProvider.setPasswordEncoder(encoder());
-        return authProvider;
-    }
-    @Bean
-    public PasswordEncoder encoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
     public AuthenticationRepositoryPort authenticationRepositoryPort(AuthenticationManager authenticationManager) {
         return new AuthenticationService(userRepository, jwtService,authenticationManager);
     }
@@ -80,5 +47,10 @@ public class BeanConfiguration {
         AuthenticationManager authenticationManager = config.getAuthenticationManager();
         return new AuthenticationUseCase(userRepositoryPort(), authenticationRepositoryPort(authenticationManager));
     }
+    @Bean
+    public UserServicePort userServicePort() {
+        return new UserUseCase(userRepositoryPort());
+    }
+
 }
 

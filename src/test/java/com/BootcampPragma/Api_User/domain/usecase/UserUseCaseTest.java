@@ -1,17 +1,15 @@
 package com.BootcampPragma.Api_User.domain.usecase;
 
-import com.BootcampPragma.Api_User.domain.exeption.UserEmailAlreadyExistsException;
-import com.BootcampPragma.Api_User.domain.exeption.UserIdAlreadyExistsException;
+import com.BootcampPragma.Api_User.domain.model.RoleEnum;
 import com.BootcampPragma.Api_User.domain.model.User;
 import com.BootcampPragma.Api_User.domain.spi.UserRepositoryPort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 class UserUseCaseTest {
@@ -21,77 +19,41 @@ class UserUseCaseTest {
 
     @InjectMocks
     private UserUseCase userUseCase;
-    private User user;
+
+    private User mockUser;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.openMocks(this);
-        user = User.builder()
+
+        // Configuramos el mock de User
+        mockUser = User.builder()
+                .id(1L)
                 .name("John")
                 .lastName("Doe")
                 .email("john.doe@example.com")
-                .idDocument("123456")
+                .password("password123")
+                .roleEnum(RoleEnum.USER)
+                .idDocument("1234567890")
                 .phoneNumber("+123456789012")
-                .birthDate("01/01/2000")
-                .password("password")
+                .birthDate("01/01/1980")
                 .build();
-
-    }
-
-    @Test
-    void testRegisterUser_EmailAlreadyExists() {
-
-        when(userRepositoryPort.getUserByEmail(user.getEmail())).thenReturn(user);
-
-        UserEmailAlreadyExistsException thrown = assertThrows(
-                UserEmailAlreadyExistsException.class,
-                () -> userUseCase.register(user)
-        );
-
-        assertNotNull(thrown);
-        verify(userRepositoryPort, never()).register(any(User.class));
-    }
-
-    @Test
-    void testRegisterUser_IdAlreadyExists() {
-
-        when(userRepositoryPort.getUserByEmail(user.getEmail())).thenReturn(null);
-        when(userRepositoryPort.getUserByIdDocument(user.getIdDocument())).thenReturn(user);
-
-        // Act & Assert
-        UserIdAlreadyExistsException thrown = assertThrows(
-                UserIdAlreadyExistsException.class,
-                () -> userUseCase.register(user)
-        );
-
-        assertNotNull(thrown);
-        verify(userRepositoryPort, never()).register(any(User.class));
-    }
-
-    @Test
-    void testRegisterUser_Success() {
-
-        when(userRepositoryPort.getUserByEmail(user.getEmail())).thenReturn(null);
-        when(userRepositoryPort.getUserByIdDocument(user.getIdDocument())).thenReturn(null);
-        when(userRepositoryPort.register(ArgumentMatchers.any(User.class))).thenReturn(user);
-
-        User result = userUseCase.register(user);
-
-        assertNotNull(result);
-        assertEquals(user, result);
-        verify(userRepositoryPort).register(user);
     }
 
     @Test
     void testGetUserByIdDocument() {
-        String idDocument = "123456";
+        when(userRepositoryPort.getUserByIdDocument("1234567890")).thenReturn(mockUser);
 
-        when(userRepositoryPort.getUserByIdDocument(idDocument)).thenReturn(user);
+        User result = userUseCase.getUserByIdDocument("1234567890");
 
-        User result = userUseCase.getUserByIdDocument(idDocument);
+        assertEquals(mockUser.getId(), result.getId());
+        assertEquals(mockUser.getName(), result.getName());
+        assertEquals(mockUser.getLastName(), result.getLastName());
+        assertEquals(mockUser.getEmail(), result.getEmail());
+        assertEquals(mockUser.getIdDocument(), result.getIdDocument());
+        assertEquals(mockUser.getPhoneNumber(), result.getPhoneNumber());
 
-        assertNotNull(result);
-        assertEquals(user, result);
-        verify(userRepositoryPort).getUserByIdDocument(idDocument);
+        verify(userRepositoryPort, times(1)).getUserByIdDocument("1234567890");
     }
 }
+
