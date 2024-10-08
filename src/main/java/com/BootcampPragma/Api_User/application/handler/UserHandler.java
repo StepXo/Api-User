@@ -20,6 +20,7 @@ public class UserHandler {
     private final PasswordEncoder passwordEncoder;
     private final UserResponseMapper userResponseMapper;
 
+<<<<<<< Updated upstream
 
 
     public UserRequestDto register(UserRequestDto userDto) {
@@ -38,6 +39,10 @@ public class UserHandler {
 
     public UserResponseDto getUserByIdDocument(String id) {
         User user = userServicePort.getUserByIdDocument(id);
+=======
+    public UserResponse getUserById(String id) {
+        User user = userServicePort.getUserById(id);
+>>>>>>> Stashed changes
 
         return userResponseMapper.toUserResponseDto(user);
     }

@@ -48,7 +48,11 @@ public class UserEntity implements UserDetails {
 
     @Override
     public String getUsername() {
+<<<<<<< Updated upstream
         return getName();
+=======
+        return String.valueOf(id);
+>>>>>>> Stashed changes
     }
 
     @Override

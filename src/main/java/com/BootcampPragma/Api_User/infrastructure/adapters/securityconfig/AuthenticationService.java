@@ -19,6 +19,7 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
 
+<<<<<<< Updated upstream
     /*public UserResponseDto authenticate(UserRequestDto request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -42,6 +43,19 @@ public class AuthenticationService {
                 .roleEnum(RoleEnum.USER).build();
 
         repository.save(user);
+=======
+    @Override
+    public String authenticate(Authentication request) {
+        var user = repository.findByEmail(request.getEmail()).orElseThrow();
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        user.getId(),
+                        request.getPassword()
+                )
+        );
+        return jwtService.getToken(user);
+    }
+>>>>>>> Stashed changes
 
         return UserResponseDto.builder().token(jwtService.getToken(user)).build();
     }*/
