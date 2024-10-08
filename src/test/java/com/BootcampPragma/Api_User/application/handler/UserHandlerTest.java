@@ -102,6 +102,7 @@ class UserHandlerTest {
                 .build();
         UserResponseDto userResponseDto = new UserResponseDto();
 
+<<<<<<< Updated upstream
         when(userServicePort.getUserByIdDocument(id)).thenReturn(user);
         when(userResponseMapper.toUserResponseDto(user)).thenReturn(userResponseDto);
 
@@ -112,6 +113,18 @@ class UserHandlerTest {
         verify(userServicePort).getUserByIdDocument(id);
         verify(userResponseMapper).toUserResponseDto(user);
         assertEquals(userResponseDto, result);
+=======
+        when(userServicePort.getUserById(id)).thenReturn(user);
+        when(userHandlerMapper.toUserResponseDto(user)).thenReturn(userResponse);
+
+        // Act
+        UserResponse result = userHandler.getUserById(id);
+
+        // Assert
+        verify(userServicePort).getUserById(id);
+        verify(userHandlerMapper).toUserResponseDto(user);
+        assertEquals(userResponse, result);
+>>>>>>> Stashed changes
     }
 
 }

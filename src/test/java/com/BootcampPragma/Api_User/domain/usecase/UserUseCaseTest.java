@@ -84,14 +84,24 @@ class UserUseCaseTest {
 
     @Test
     void testGetUserByIdDocument() {
+<<<<<<< Updated upstream
         String idDocument = "123456";
 
         when(userRepositoryPort.getUserByIdDocument(idDocument)).thenReturn(user);
+=======
+        when(userRepositoryPort.getUserById(1)).thenReturn(mockUser);
+
+        User result = userUseCase.getUserById("1234567890");
+>>>>>>> Stashed changes
 
         User result = userUseCase.getUserByIdDocument(idDocument);
 
+<<<<<<< Updated upstream
         assertNotNull(result);
         assertEquals(user, result);
         verify(userRepositoryPort).getUserByIdDocument(idDocument);
+=======
+        verify(userRepositoryPort, times(1)).getUserById(1);
+>>>>>>> Stashed changes
     }
 }
