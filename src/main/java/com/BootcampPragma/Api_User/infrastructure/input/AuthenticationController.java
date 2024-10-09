@@ -28,7 +28,8 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationResponse> register(
             @RequestBody UserRequest request
     ) {
-        return ResponseEntity.ok(service.register(request,"USER"));
+        return ResponseEntity.ok(service.register(request,"ADMIN"));
+        //return ResponseEntity.ok(service.register(request,"USER"));
     }
 
 }

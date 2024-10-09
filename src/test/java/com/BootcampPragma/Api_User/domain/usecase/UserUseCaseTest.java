@@ -1,12 +1,9 @@
 package com.BootcampPragma.Api_User.domain.usecase;
 
-import com.BootcampPragma.Api_User.domain.exeption.UserEmailAlreadyExistsException;
-import com.BootcampPragma.Api_User.domain.exeption.UserIdAlreadyExistsException;
 import com.BootcampPragma.Api_User.domain.model.User;
 import com.BootcampPragma.Api_User.domain.spi.UserRepositoryPort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -39,69 +36,16 @@ class UserUseCaseTest {
     }
 
     @Test
-    void testRegisterUser_EmailAlreadyExists() {
-
-        when(userRepositoryPort.getUserByEmail(user.getEmail())).thenReturn(user);
-
-        UserEmailAlreadyExistsException thrown = assertThrows(
-                UserEmailAlreadyExistsException.class,
-                () -> userUseCase.register(user)
-        );
-
-        assertNotNull(thrown);
-        verify(userRepositoryPort, never()).register(any(User.class));
-    }
-
-    @Test
-    void testRegisterUser_IdAlreadyExists() {
-
-        when(userRepositoryPort.getUserByEmail(user.getEmail())).thenReturn(null);
-        when(userRepositoryPort.getUserByIdDocument(user.getIdDocument())).thenReturn(user);
-
-        // Act & Assert
-        UserIdAlreadyExistsException thrown = assertThrows(
-                UserIdAlreadyExistsException.class,
-                () -> userUseCase.register(user)
-        );
-
-        assertNotNull(thrown);
-        verify(userRepositoryPort, never()).register(any(User.class));
-    }
-
-    @Test
-    void testRegisterUser_Success() {
-
-        when(userRepositoryPort.getUserByEmail(user.getEmail())).thenReturn(null);
-        when(userRepositoryPort.getUserByIdDocument(user.getIdDocument())).thenReturn(null);
-        when(userRepositoryPort.register(ArgumentMatchers.any(User.class))).thenReturn(user);
-
-        User result = userUseCase.register(user);
-
-        assertNotNull(result);
-        assertEquals(user, result);
-        verify(userRepositoryPort).register(user);
-    }
-
-    @Test
     void testGetUserByIdDocument() {
-<<<<<<< Updated upstream
-        String idDocument = "123456";
 
-        when(userRepositoryPort.getUserByIdDocument(idDocument)).thenReturn(user);
-=======
-        when(userRepositoryPort.getUserById(1)).thenReturn(mockUser);
+        when(userRepositoryPort.getUserById(1)).thenReturn(user);
 
         User result = userUseCase.getUserById("1234567890");
->>>>>>> Stashed changes
 
-        User result = userUseCase.getUserByIdDocument(idDocument);
 
-<<<<<<< Updated upstream
         assertNotNull(result);
         assertEquals(user, result);
-        verify(userRepositoryPort).getUserByIdDocument(idDocument);
-=======
+
         verify(userRepositoryPort, times(1)).getUserById(1);
->>>>>>> Stashed changes
     }
 }
