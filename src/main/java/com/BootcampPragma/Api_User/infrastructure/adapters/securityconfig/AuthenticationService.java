@@ -20,14 +20,15 @@ public class AuthenticationService implements AuthenticationRepositoryPort {
     @Override
     public String authenticate(Authentication request) {
 
+        var user = repository.findByEmail(request.getEmail()).orElseThrow();
+
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
+                        user.getId(),
                         request.getPassword()
                 )
         );
 
-        var user = repository.findByEmail(request.getEmail()).orElseThrow();
 
 
         return jwtService.getToken(user);
