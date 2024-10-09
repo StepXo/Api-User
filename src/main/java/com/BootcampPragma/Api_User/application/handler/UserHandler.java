@@ -27,10 +27,15 @@ public class UserHandler {
     private  final UserServicePort userServicePort;
     private final UserHandlerMapper userHandlerMapper;
 
+<<<<<<< Updated upstream
 
 
     public UserResponse getUserByIdDocument(String id) {
         User user = userServicePort.getUserByIdDocument(id);
+=======
+    public UserResponse getUserById(String id) {
+        User user = userServicePort.getUserById(id);
+>>>>>>> Stashed changes
 
         return userHandlerMapper.toUserResponseDto(user);
     }

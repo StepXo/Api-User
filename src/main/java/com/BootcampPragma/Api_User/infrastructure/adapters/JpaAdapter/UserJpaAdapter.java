@@ -25,7 +25,6 @@ public class UserJpaAdapter implements UserRepositoryPort {
         return jwtService.getToken(userMapper.toUserEntity(user));
     }
 
-    @Override
     public User getUserByIdDocument(String id) {
         return userRepository.findByIdDocument(id)
                 .map(userMapper::toUser)
@@ -38,6 +37,14 @@ public class UserJpaAdapter implements UserRepositoryPort {
                 .map(userMapper::toUser)
                 .orElse(null);
     }
+
+    @Override
+    public User getUserById(long id) {
+        return userRepository.findById(id)
+                .map(userMapper::toUser)
+                .orElse(null);
+    }
+
 
     @Override
     public void updateUser(User user) {

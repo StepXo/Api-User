@@ -3,7 +3,12 @@ package com.BootcampPragma.Api_User.domain.model;
 public enum RoleEnum {
     ADMIN,
     USER,
-    AUX_BODEGA;
+<<<<<<< Updated upstream
+    AUX_BODEGA
+=======
+    WAREHOUSE_AUX,
+    CLIENT;
 
 
+>>>>>>> Stashed changes
 }

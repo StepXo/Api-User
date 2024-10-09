@@ -2,6 +2,7 @@ package com.BootcampPragma.Api_User.domain.model;
 import com.BootcampPragma.Api_User.domain.utils.AuthenticationBuilder;
 
 public class Authentication {
+    private long id;
     private String email;
     private String password;
     private String token;
@@ -10,7 +11,7 @@ public class Authentication {
     }
 
     public Authentication(AuthenticationBuilder builder) {
-
+        this.id = builder.id;
         this.email = builder.email;
         this.password = builder.password;
         this.token = builder.token;
@@ -19,6 +20,10 @@ public class Authentication {
 
     public static AuthenticationBuilder builder() {
         return new AuthenticationBuilder();
+    }
+
+    public long getId() {
+        return id;
     }
 
     public String getEmail() {
@@ -31,6 +36,10 @@ public class Authentication {
 
     public String getToken() {
         return token;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public void setEmail(String email) {

@@ -6,9 +6,8 @@ import java.util.List;
 
 public interface UserRepositoryPort {
 
-    User getUserByIdDocument(String id);
-
     User getUserByEmail(String email);
+    User getUserById(long id);
 
     String register(User user);
 

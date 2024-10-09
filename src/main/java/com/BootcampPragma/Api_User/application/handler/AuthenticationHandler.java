@@ -23,10 +23,7 @@ public class AuthenticationHandler {
 
     public AuthenticationResponse register(UserRequest userDto,String role) {
 
-
         User user = buildUser(userDto,role);
-
-
         return authenticationMapper.toAuthenticationResponse(authenticationServicePort.register(user));
     }
 

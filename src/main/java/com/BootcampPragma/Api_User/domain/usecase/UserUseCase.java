@@ -21,8 +21,8 @@ public class UserUseCase implements UserServicePort {
 
 
     @Override
-    public User getUserByIdDocument(String id) {
-        return userRepositoryPort.getUserByIdDocument(id);
+    public User getUserById(String id) {
+        return userRepositoryPort.getUserById(Long.parseLong(id));
     }
 
     @Override

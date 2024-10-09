@@ -27,7 +27,7 @@ public class AuthenticationUseCase implements AuthenticationServicePort {
             throw new UserEmailAlreadyExistsException();
         }
 
-        if (userRepositoryPort.getUserByIdDocument(user.getIdDocument()) != null) {
+        if (userRepositoryPort.getUserById(user.getId()) != null) {
             throw new UserIdAlreadyExistsException();
         }
         String token = userRepositoryPort.register(user);
