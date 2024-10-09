@@ -1,6 +1,7 @@
 package com.BootcampPragma.Api_User.infrastructure.adapters.persistance.entity;
 
 import com.BootcampPragma.Api_User.domain.model.RoleEnum;
+import com.BootcampPragma.Api_User.infrastructure.Utils.InfraConstants;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -11,7 +12,6 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name = "Users")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,36 +21,30 @@ public class UserEntity implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
-    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(unique = true)
     private String email;
 
     @Enumerated(EnumType.STRING)
     private RoleEnum role;
 
-    @Column(name = "id_document", nullable = false, unique = true)
+    @Column(unique = true)
     private String idDocument;
 
-    @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
 
-    @Column(name = "birth_date", nullable = false)
     private String birthDate;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
+        return List.of(new SimpleGrantedAuthority(InfraConstants.ROLE + role.name()));
     }
 
     @Override
