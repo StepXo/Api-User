@@ -5,17 +5,24 @@ import com.BootcampPragma.Api_User.domain.spi.UserRepositoryPort;
 import com.BootcampPragma.Api_User.infrastructure.adapters.persistance.entity.UserEntity;
 import com.BootcampPragma.Api_User.infrastructure.adapters.persistance.mapper.UserMapper;
 import com.BootcampPragma.Api_User.infrastructure.adapters.persistance.repository.UserRepository;
+import com.BootcampPragma.Api_User.infrastructure.adapters.securityconfig.jwtconfiguration.JwtService;
 import lombok.RequiredArgsConstructor;
+
 
 @RequiredArgsConstructor
 public class UserJpaAdapter implements UserRepositoryPort {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final JwtService jwtService;
+
 
     @Override
-    public User register(User user) {
-        UserEntity userEntity = this.userRepository.save(userMapper.toUserEntity(user));
-        return userMapper.toUser(userEntity);
+    public String register(User user) {
+        UserEntity userEntity = userMapper.toUserEntity(user);
+
+         userRepository.save(userEntity);
+
+        return jwtService.getToken(userMapper.toUserEntity(user));
     }
 
     public User getUserByIdDocument(String id) {

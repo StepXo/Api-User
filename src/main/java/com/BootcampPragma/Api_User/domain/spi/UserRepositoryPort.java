@@ -9,7 +9,7 @@ public interface UserRepositoryPort {
     User getUserByEmail(String email);
     User getUserById(long id);
 
-    User register(User user);
+    String register(User user);
 
     void updateUser(User user);
 

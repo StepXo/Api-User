@@ -6,6 +6,7 @@ import com.BootcampPragma.Api_User.domain.exeption.EmailFormatException;
 import com.BootcampPragma.Api_User.domain.exeption.InvalidAgeException;
 import com.BootcampPragma.Api_User.domain.exeption.InvalidIdDocumentException;
 import com.BootcampPragma.Api_User.domain.exeption.PhoneNumberFormatException;
+import com.BootcampPragma.Api_User.domain.model.Authentication;
 import com.BootcampPragma.Api_User.domain.model.User;
 
 import java.time.LocalDate;
@@ -63,5 +64,9 @@ public class Validation {
         validateIdDocument(user.getIdDocument());
         validateAge(user.getBirthDate());
     }
+    public static void validate(Authentication user){
+        validateEmail(user.getEmail());
+    }
+
 }
 

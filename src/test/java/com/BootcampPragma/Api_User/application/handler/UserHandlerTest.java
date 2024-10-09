@@ -1,8 +1,8 @@
 package com.BootcampPragma.Api_User.application.handler;
 
-import com.BootcampPragma.Api_User.application.dto.UserRequestDto;
-import com.BootcampPragma.Api_User.application.dto.UserResponseDto;
-import com.BootcampPragma.Api_User.application.mapper.UserResponseMapper;
+import com.BootcampPragma.Api_User.application.dto.UserRequest;
+import com.BootcampPragma.Api_User.application.dto.UserResponse;
+import com.BootcampPragma.Api_User.application.mapper.UserHandlerMapper;
 import com.BootcampPragma.Api_User.domain.api.UserServicePort;
 import com.BootcampPragma.Api_User.domain.model.RoleEnum;
 import com.BootcampPragma.Api_User.domain.model.User;
@@ -28,18 +28,18 @@ class UserHandlerTest {
     private PasswordEncoder passwordEncoder;
 
     @Mock
-    private UserResponseMapper userResponseMapper;
+    private UserHandlerMapper userHandlerMapper;
 
     @InjectMocks
     private UserHandler userHandler;
-    private UserRequestDto userDto;
+    private UserRequest userDto;
 
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
         // Arrange
-        userDto = new UserRequestDto();
+        userDto = new UserRequest();
 
         userDto.setName("John");
         userDto.setLastName("Doe");
@@ -67,7 +67,7 @@ class UserHandlerTest {
         when(passwordEncoder.encode("password")).thenReturn("encodedPassword");
 
         // Act
-        UserRequestDto result = userHandler.register(userDto);
+        UserRequest result = userHandler.register(userDto);
 
         // Assert
         verify(userServicePort).register(argThat(new ArgumentMatcher<User>() {
@@ -100,31 +100,18 @@ class UserHandlerTest {
                 .password("encodedPassword")
                 .roleEnum(RoleEnum.USER)
                 .build();
-        UserResponseDto userResponseDto = new UserResponseDto();
+        UserResponse userResponse = new UserResponse();
 
-<<<<<<< Updated upstream
         when(userServicePort.getUserByIdDocument(id)).thenReturn(user);
-        when(userResponseMapper.toUserResponseDto(user)).thenReturn(userResponseDto);
-
-        // Act
-        UserResponseDto result = userHandler.getUserByIdDocument(id);
-
-        // Assert
-        verify(userServicePort).getUserByIdDocument(id);
-        verify(userResponseMapper).toUserResponseDto(user);
-        assertEquals(userResponseDto, result);
-=======
-        when(userServicePort.getUserById(id)).thenReturn(user);
         when(userHandlerMapper.toUserResponseDto(user)).thenReturn(userResponse);
 
         // Act
-        UserResponse result = userHandler.getUserById(id);
+        UserResponse result = userHandler.getUserByIdDocument(id);
 
         // Assert
-        verify(userServicePort).getUserById(id);
+        verify(userServicePort).getUserByIdDocument(id);
         verify(userHandlerMapper).toUserResponseDto(user);
         assertEquals(userResponse, result);
->>>>>>> Stashed changes
     }
 
 }

@@ -4,10 +4,10 @@ import com.BootcampPragma.Api_User.domain.model.Authentication;
 import com.BootcampPragma.Api_User.domain.model.User;
 
 
-public interface UserServicePort {
-    User getUserById(String id);
+public interface AuthenticationServicePort {
 
-    void updateUser(User user);
+    Authentication register(User user);
 
-    void deleteUser(String token);
+    Authentication login(Authentication user);
+
 }
