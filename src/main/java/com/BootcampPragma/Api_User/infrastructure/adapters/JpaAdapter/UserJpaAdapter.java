@@ -18,11 +18,10 @@ public class UserJpaAdapter implements UserRepositoryPort {
 
     @Override
     public String register(User user) {
-        UserEntity userEntity = userMapper.toUserEntity(user);
 
-         userRepository.save(userEntity);
+        UserEntity userEntity = userRepository.save(userMapper.toUserEntity(user));
 
-        return jwtService.getToken(userMapper.toUserEntity(user));
+        return jwtService.getToken(userEntity);
     }
 
     public User getUserByIdDocument(String id) {
