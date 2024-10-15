@@ -69,6 +69,25 @@ public class ControllerAdvisor {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Collections.singletonMap(MESSAGE, ExceptionResponse.PASSWORD_FORMAT.getMessage()));
     }
+    @ExceptionHandler(PasswordIsNullException.class)
+    public ResponseEntity<Map<String, String>> passwordIsNull(
+            PasswordIsNullException passwordIsNullException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.PASSWORD_IS_NULL.getMessage()));
+    }
+    @ExceptionHandler(UserIsNullException.class)
+    public ResponseEntity<Map<String, String>> userIsNull(
+            UserIsNullException userIsNullException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.USER_IS_NULL.getMessage()));
+    }
+    @ExceptionHandler(NameIsNullException.class)
+    public ResponseEntity<Map<String, String>> nameIsNull(
+            NameIsNullException nameIsNullException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.NAME_IS_NULL.getMessage()));
+    }
+
 
 
 }

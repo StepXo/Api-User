@@ -11,7 +11,9 @@ public enum ExceptionResponse {
     USER_EMAIL_ALREADY_EXIST("There is already a user with that email"),
     USER_NOT_FOUND("No user was found with that email"),
     PASSWORD_FORMAT("The password can't be null or empty"),
-
+    PASSWORD_IS_NULL("Password cannot be null or empty"),
+    USER_IS_NULL("User cannot be null"),
+    NAME_IS_NULL("Name cannot be null or empty"),
     ;
 
 

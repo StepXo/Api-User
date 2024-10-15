@@ -19,23 +19,16 @@ public class UserController {
     private final AuthenticationHandler authService;
 
 
-    @GetMapping(InfraConstants.USER_PATH)
+    @GetMapping(InfraConstants.USER)
     public ResponseEntity<UserResponse> getUserById(@PathVariable String id) {
         UserResponse userResponse = userService.getUserById(id);
         return ResponseEntity.ok(userResponse);
     }
 
-    @PostMapping(InfraConstants.AUX)
-    public ResponseEntity<AuthenticationResponse> registerAux(
-            @RequestBody UserRequest request
-    ) {
-        return ResponseEntity.ok(authService.register(request, InfraConstants.ROLE_AUX_BODEGA));
-    }
-    @PostMapping(InfraConstants.ADMIN)
     public ResponseEntity<AuthenticationResponse> registerAdmin(
             @RequestBody UserRequest request
     ) {
-        return ResponseEntity.ok(authService.register(request,InfraConstants.AUTH_ROLE));
+        return ResponseEntity.ok(authService.register(request, String.valueOf(request.getRole())));
     }
 
 }

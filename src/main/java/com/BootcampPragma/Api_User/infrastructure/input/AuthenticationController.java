@@ -10,14 +10,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(InfraConstants.AUTH_PATH)
+@RequestMapping(InfraConstants.AUTH)
 @RequiredArgsConstructor
 public class AuthenticationController {
 
     private final AuthenticationHandler service;
 
 
-    @PostMapping(InfraConstants.LOGIN_PATH)
+    @PostMapping(InfraConstants.LOGIN)
     public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody AuthenticationRequest request
     ) {
@@ -25,12 +25,11 @@ public class AuthenticationController {
         return  ResponseEntity.ok(token);
     }
 
-    @PostMapping(InfraConstants.REGISTER_PATH)
+    @PostMapping(InfraConstants.REGISTER)
     public ResponseEntity<AuthenticationResponse> register(
             @RequestBody UserRequest request
     ) {
-        return ResponseEntity.ok(service.register(request, InfraConstants.ROLE_ADMIN)); //For debugging proposes
-        //return ResponseEntity.ok(service.register(request,InfraConstants.ROLE_USER));
+        return ResponseEntity.ok(service.register(request,InfraConstants.ROLE_USER));
     }
 
 }
