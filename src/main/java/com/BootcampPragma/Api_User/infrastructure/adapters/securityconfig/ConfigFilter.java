@@ -27,8 +27,8 @@ public class ConfigFilter {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(InfraConstants.getPath(InfraConstants.AUTH_PATH,InfraConstants.ASTERISKS)).permitAll()
-                        .requestMatchers(InfraConstants.getPath(InfraConstants.ADMIN_PATH,InfraConstants.ASTERISKS)).hasRole(InfraConstants.ROLE_ADMIN)
+                        .requestMatchers(InfraConstants.getPath(InfraConstants.AUTH,InfraConstants.ASTERISKS)).permitAll()
+                        .requestMatchers(InfraConstants.getPath(InfraConstants.ADMIN,InfraConstants.ASTERISKS)).hasRole(InfraConstants.ROLE_ADMIN)
                         .anyRequest().authenticated())
 
                 .sessionManagement(session -> session
