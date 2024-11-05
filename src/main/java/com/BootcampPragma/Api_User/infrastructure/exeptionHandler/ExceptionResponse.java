@@ -14,6 +14,9 @@ public enum ExceptionResponse {
     PASSWORD_IS_NULL("Password cannot be null or empty"),
     USER_IS_NULL("User cannot be null"),
     NAME_IS_NULL("Name cannot be null or empty"),
+    BAD_CREDENTIALS("The password is incorrect"),
+    ROLE_IS_NULL("The role cannot be null"),
+    INVALID_ROLE("The role is invalid"),
     ;
 
 

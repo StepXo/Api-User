@@ -4,6 +4,7 @@ package com.BootcampPragma.Api_User.domain.utils;
 
 import com.BootcampPragma.Api_User.domain.exeption.*;
 import com.BootcampPragma.Api_User.domain.model.Authentication;
+import com.BootcampPragma.Api_User.domain.model.RoleEnum;
 import com.BootcampPragma.Api_User.domain.model.User;
 
 import java.time.LocalDate;
@@ -23,13 +24,22 @@ public class Validation {
         }
     }
 
-    private static void validatePhoneNumber(String phoneNumber) {
+    private static String validatePhoneNumber(String phoneNumber) {
         if (phoneNumber == null || phoneNumber.isEmpty()) {
             throw new PhoneNumberFormatException();
         }
+
         if (!DomConstants.PHONE_PATTERN.matcher(phoneNumber).matches()) {
             throw new PhoneNumberFormatException();
         }
+
+        if (phoneNumber.length() == 10) {
+            return "+57" + phoneNumber;
+        } else if (phoneNumber.length() == 12 && !phoneNumber.startsWith("+")) {
+            return "+" + phoneNumber;
+        }
+
+        return phoneNumber;
     }
 
     private static void validateIdDocument(String idDocument) {
@@ -70,12 +80,25 @@ public class Validation {
     public static void validate(User user){
         validateNullable(user);
         validateEmail(user.getEmail());
-        validatePhoneNumber(user.getPhoneNumber());
+        user.setPhoneNumber(validatePhoneNumber(user.getPhoneNumber()));
         validateIdDocument(user.getIdDocument());
         validateAge(user.getBirthDate());
     }
+    public static void validateRole(String role){
+        if (role == null || role.isEmpty()){
+            throw new RoleIsNullException();
+        }
+        if (!RoleEnum.contains(role)){
+            throw new InvalidRoleException();
+        }
+    }
     public static void validate(Authentication user){
         validateEmail(user.getEmail());
+    }
+
+    public static void validate(User user,String role){
+        validateNullable(user);
+        validateRole(role);
     }
 
 }

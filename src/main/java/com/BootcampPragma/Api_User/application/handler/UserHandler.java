@@ -23,4 +23,8 @@ public class UserHandler {
         User user = userServicePort.getUserById(id);
         return userHandlerMapper.toUserResponseDto(user);
     }
+
+    public String setRole(long id,String role) {
+        return userServicePort.setRole(id,role);
+    }
 }

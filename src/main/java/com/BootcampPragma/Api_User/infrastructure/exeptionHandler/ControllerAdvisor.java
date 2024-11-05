@@ -4,6 +4,7 @@ package com.BootcampPragma.Api_User.infrastructure.exeptionHandler;
 import com.BootcampPragma.Api_User.domain.exeption.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -13,6 +14,13 @@ import java.util.Map;
 @ControllerAdvice
 public class ControllerAdvisor {
     private static final String MESSAGE = "Message";
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<Map<String, String>> handleBadCredentialsException(
+            BadCredentialsException badCredentialsException) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(Collections.singletonMap(MESSAGE,ExceptionResponse.BAD_CREDENTIALS.getMessage()));
+    }
 
     //AlreadyExist
     @ExceptionHandler(UserIdAlreadyExistsException.class)
@@ -27,7 +35,6 @@ public class ControllerAdvisor {
         return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body(Collections.singletonMap(MESSAGE, ExceptionResponse.USER_EMAIL_ALREADY_EXIST.getMessage()));
     }
-
 
     //NotFound
     @ExceptionHandler(UserNotFound.class)
@@ -86,6 +93,18 @@ public class ControllerAdvisor {
             NameIsNullException nameIsNullException) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Collections.singletonMap(MESSAGE, ExceptionResponse.NAME_IS_NULL.getMessage()));
+    }
+    @ExceptionHandler(InvalidRoleException.class)
+    public ResponseEntity<Map<String, String>> invalidRoleException(
+            InvalidRoleException invalidRoleException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.INVALID_ROLE.getMessage()));
+    }
+    @ExceptionHandler(RoleIsNullException.class)
+    public ResponseEntity<Map<String, String>> roleIsNullException(
+            RoleIsNullException roleIsNullException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.ROLE_IS_NULL.getMessage()));
     }
 
 

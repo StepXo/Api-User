@@ -58,16 +58,15 @@ public class JwtService {
 
     public String generate(UserEntity user) {
         Map<String, Object> claims = new HashMap<>();
-        String firstRole = user.getRole().toString();
-        claims.put(InfraConstants.AUTH_ROLE, InfraConstants.ROLE + firstRole);
+
+        claims.put(InfraConstants.AUTH_ROLE, InfraConstants.ROLE + user.getRole().toString());
         return generateToken(claims, user);
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String userId = extractUserId(token);
-        return (userId.equals(String.valueOf(userDetails.getUsername())));
+        return (userId.equals(userDetails.getUsername()));
     }
-
 
     private Claims extractAllClaims(String token) throws SignatureException {
         try {

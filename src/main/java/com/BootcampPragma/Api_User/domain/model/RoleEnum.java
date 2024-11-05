@@ -6,5 +6,13 @@ public enum RoleEnum {
     WAREHOUSE_AUX,
     CLIENT;
 
+    public static boolean contains(String role) {
+        for (RoleEnum r : values()) {
+            if (r.name().equalsIgnoreCase(role)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

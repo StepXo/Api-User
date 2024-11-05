@@ -7,13 +7,14 @@ import java.util.regex.Pattern;
 public class DomConstants {
 
     public static final Pattern EMAIL_PATTERN = Pattern.compile("^[\\w!#$%&'*+/=?`{|}~^.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$");
-    public static final Pattern PHONE_PATTERN = Pattern.compile("^\\+?\\d{12}$");
+    public static final Pattern PHONE_PATTERN = Pattern.compile("^(\\+?\\d{12}|\\d{10})$");
     public static final Pattern ID_DOCUMENT_PATTERN = Pattern.compile("^\\d+$");
     public static final DateTimeFormatter DATE_FORMATTER = new DateTimeFormatterBuilder()
             .appendOptional(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
             .appendOptional(DateTimeFormatter.ofPattern("d/M/yyyy"))
             .appendOptional(DateTimeFormatter.ofPattern("dd/M/yyyy"))
             .appendOptional(DateTimeFormatter.ofPattern("d/MM/yyyy"))
+            .appendOptional(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
             .toFormatter();
 
 
