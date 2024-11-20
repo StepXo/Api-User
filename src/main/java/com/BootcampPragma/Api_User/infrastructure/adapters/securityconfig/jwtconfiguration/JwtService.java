@@ -1,5 +1,6 @@
 package com.BootcampPragma.Api_User.infrastructure.adapters.securityconfig.jwtconfiguration;
 
+import com.BootcampPragma.Api_User.infrastructure.Utils.InfraConstants;
 import com.BootcampPragma.Api_User.infrastructure.adapters.persistance.entity.UserEntity;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -7,7 +8,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
-import jakarta.validation.constraints.NotNull;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -19,25 +20,22 @@ import java.util.function.Function;
 
 @Service
 public class JwtService {
-    private static final String SECRET_KEY = "mi_mama-Me_mima-_miMama_meAma";
+    @Value("${jwt.secret.key}")
+    private String secretKey;
 
     public String getToken(UserEntity user){
-        return generateToken(new HashMap<>(),user);
+        return generate(user);
     }
 
     public String generateToken(
             Map<String, Object> extraClaims,
-            @NotNull UserDetails userDetails
+            UserEntity user
 
     ) {
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
-<<<<<<< Updated upstream
-                .setSubject(userDetails.getUsername())
-=======
                 .setSubject(String.valueOf(user.getId()))
->>>>>>> Stashed changes
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
@@ -45,7 +43,7 @@ public class JwtService {
     }
 
     private Key getSignInKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
+        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
@@ -58,10 +56,11 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    public String generate(UserDetails userDetails) {
+    public String generate(UserEntity user) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("role", "USER");
-        return generateToken(claims, userDetails);
+        String firstRole = user.getRole().toString();
+        claims.put(InfraConstants.AUTH_ROLE, InfraConstants.ROLE + firstRole);
+        return generateToken(claims, user);
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {

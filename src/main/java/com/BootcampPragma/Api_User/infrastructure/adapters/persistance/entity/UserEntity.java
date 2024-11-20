@@ -1,7 +1,9 @@
 package com.BootcampPragma.Api_User.infrastructure.adapters.persistance.entity;
 
 import com.BootcampPragma.Api_User.domain.model.RoleEnum;
+import com.BootcampPragma.Api_User.infrastructure.Utils.InfraConstants;
 import jakarta.persistence.*;
+import jdk.jfr.Name;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -10,49 +12,54 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
+import static com.BootcampPragma.Api_User.infrastructure.Utils.InfraConstants.ID_ROLE;
+import static com.BootcampPragma.Api_User.infrastructure.Utils.InfraConstants.ROLE_USER;
+
 @Entity
-@Table(name = "Users")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@Table(name = ROLE_USER)
 public class UserEntity implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
-    @Column(name = "name", nullable = false)
+
+    @Column(nullable = false)
     private String name;
-    @Column(name = "last_name", nullable = false)
+
     private String lastName;
-    @Column(name = "password", nullable = false)
+
+    @Column(nullable = false)
     private String password;
-    @Column(name = "email", nullable = false, unique = true)
+
+    @Column(unique = true)
     private String email;
+
     @Enumerated(EnumType.STRING)
-    @Column(name = "role", nullable = false)
+    @Name(value = ID_ROLE)
+    @Column(nullable = false)
     private RoleEnum role;
-    @Column(name = "id_document", nullable = false, unique = true)
+
+    @Column(unique = true)
     private String idDocument;
-    @Column(name = "phone_number", nullable = false)
+
+    @Column(nullable = false)
     private String phoneNumber;
-    @Column(name = "birth_date", nullable = false)
+
     private String birthDate;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return List.of(new SimpleGrantedAuthority(InfraConstants.ROLE + role.name()));
     }
 
     @Override
     public String getUsername() {
-<<<<<<< Updated upstream
-        return getName();
-=======
         return String.valueOf(id);
->>>>>>> Stashed changes
     }
 
     @Override

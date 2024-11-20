@@ -1,55 +1,34 @@
 package com.BootcampPragma.Api_User.infrastructure.input;
 
-import com.BootcampPragma.Api_User.application.dto.UserRequestDto;
-import com.BootcampPragma.Api_User.application.dto.UserResponseDto;
+import com.BootcampPragma.Api_User.application.dto.AuthenticationResponse;
+import com.BootcampPragma.Api_User.application.dto.UserRequest;
+import com.BootcampPragma.Api_User.application.dto.UserResponse;
+import com.BootcampPragma.Api_User.application.handler.AuthenticationHandler;
 import com.BootcampPragma.Api_User.application.handler.UserHandler;
+import com.BootcampPragma.Api_User.infrastructure.Utils.InfraConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/admin")
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserHandler service;
+    private final UserHandler userService;
+    private final AuthenticationHandler authService;
 
-    /*@PostMapping("/login")
-    public ResponseEntity<UserResponseDto> authenticate(
-            @RequestBody UserRequestDto request
-    ) {
-        return  ResponseEntity.ok(service.authenticate(request));
-    }*/
 
-    @PostMapping("/register")
-    public ResponseEntity<UserRequestDto> register(
-            @RequestBody UserRequestDto request
-    ) {
-        return ResponseEntity.ok(service.register(request));
-    }
-    @GetMapping("/{id}")
-<<<<<<< Updated upstream
-    public ResponseEntity<UserResponseDto> getUserByIdDocument(@PathVariable String id) {
-        UserResponseDto userResponseDto = service.getUserByIdDocument(id);
-        return ResponseEntity.ok(userResponseDto);
-=======
+    @GetMapping(InfraConstants.USER)
     public ResponseEntity<UserResponse> getUserById(@PathVariable String id) {
         UserResponse userResponse = userService.getUserById(id);
         return ResponseEntity.ok(userResponse);
     }
 
-    @PostMapping("/register/aux")
-    public ResponseEntity<AuthenticationResponse> registerAux(
-            @RequestBody UserRequest request
-    ) {
-        return ResponseEntity.ok(authService.register(request,"WAREHOUSE_AUX"));
-    }
-    @PostMapping("/register/admin")
     public ResponseEntity<AuthenticationResponse> registerAdmin(
             @RequestBody UserRequest request
     ) {
-        return ResponseEntity.ok(authService.register(request,"ADMIN"));
->>>>>>> Stashed changes
+        return ResponseEntity.ok(authService.register(request, String.valueOf(request.getRole())));
     }
 
 }

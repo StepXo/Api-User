@@ -15,17 +15,18 @@ public class User {
     public User() {
     }
 
-    public User(UserBuilder builder) {
-        this.name = builder.name;
-        this.lastName = builder.lastName;
-        this.email = builder.email;
-        this.password = builder.password;
-        this.role = builder.role;
-        this.birthDate = builder.birthDate;
-        this.idDocument = builder.idDocument;
-        this.phoneNumber = builder.phoneNumber;
-        this.id = builder.id;
+    public User(UserBuilder userBuilder) {
+        this.id = userBuilder.id;
+        this.name = userBuilder.name;
+        this.lastName = userBuilder.lastName;
+        this.email = userBuilder.email;
+        this.password = userBuilder.password;
+        this.role = userBuilder.role;
+        this.idDocument = userBuilder.idDocument;
+        this.phoneNumber = userBuilder.phoneNumber;
+        this.birthDate = userBuilder.birthDate;
     }
+
 
     public static UserBuilder builder() {
         return new UserBuilder();
